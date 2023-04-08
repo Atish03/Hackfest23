@@ -25,7 +25,7 @@ To use the speech-to-text library, you will need to have the following installed
 * Pyaudio
 
 ## Installation
-* Install the Pyttsx3 library by running the following command:
+* Install the Pyttsx3 and SpeechRecognition library by running the following command:
 ```
 $ pip install pyttsx3
 $ pip install SpeechRecognition
