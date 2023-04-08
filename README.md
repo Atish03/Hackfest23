@@ -21,12 +21,14 @@ This project aims to create a Chrome extension voice bot that will help visually
 To use the speech-to-text library, you will need to have the following installed:
 * Python programming language
 * Pyttsx3 library
-* Google Cloud SDK
+* SpeechRecognition
+* Pyaudio
 
 ## Installation
 * Install the Pyttsx3 library by running the following command:
 ```
 $ pip install pyttsx3
+$ pip install SpeechRecognition
 ```
 
 ## Usage
