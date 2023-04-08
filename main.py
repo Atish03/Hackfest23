@@ -6,6 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 import time
 import getOTP
+import speech_to_text
 
 EMAIL_ID = "b3gul4.infosec@gmail.com"
 FILTERS = {
@@ -77,7 +78,7 @@ def getDetails(categoryType, element):
 	data = {}
 
 	if categoryType == "best_food":
-		data["title"] = element.find_element(By.XPATH, ".//div/a[2]/div[1]/h4").text
+		data["name"] = element.find_element(By.XPATH, ".//div/a[2]/div[1]/h4").text
 		data["rating"] = element.find_element(By.XPATH, ".//div/a[2]/div[1]/div/div/div/div/div/div[1]").text
 		data["price"] = element.find_element(By.XPATH, ".//div/a[2]/div[2]/p[2]").text
 		data["order_url"] = element.find_element(By.XPATH, ".//div/a[1]").get_attribute("href")
@@ -90,21 +91,32 @@ def order(order_url):
 	food_items = list(map(lambda x: x.text, all_foods))
 	print(food_items)
 
-driver = launchBrowser("mirzapur")
+driver = launchBrowser("pune")
 # login(driver)
 
 while True:
+	voiceHandeler = speech_to_text.Handeler()
+	command = voiceHandeler.listen().strip()
+
+	print(command)
 	try:
-		inp = input(">>> ")
 		data = getDetails("best_food", driver.find_elements(By.CLASS_NAME, "active-selected")[0])
-		if inp == "s":
-			filter = input("sortby: ")
-			sortby(filter)
-			time.sleep(2)
-			driver.refresh()
-		elif inp == "o":
-			print(data)
-			order(data["order_url"])
-	except Exception as e:
-		print(e)
-		pass 
+	except:
+		data = {}
+
+	if command != None or command == "":
+		if command == "next":
+			driver.find_element(By.ID, "nextBtn").click()
+		elif command == "previous":
+			driver.find_element(By.ID, "prevBtn").click()
+		else:
+			cmd = command.split()
+			if len(cmd) == 2:
+				if cmd[0] == "s":
+					sortby(cmd[1])
+					time.sleep(2)
+					driver.refresh()
+			elif command == "order":
+				order(data["order_url"])
+			else:
+				data[command]
