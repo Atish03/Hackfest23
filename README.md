@@ -1,5 +1,12 @@
 # Hackfest'23
 
+## TEAM MEMBERS:
+ *ATISH SHAH 
+ *SHASHANK SHUKLA
+ *PRATYUSH RAJ
+ *ARYAN KSHIRSAGAR
+ *KAUSHAL SRIVASTAVA
+
 ## Table of contents
 * [General info](#general-info)
 * [Prerequisites](#prerequisites)
