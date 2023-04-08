@@ -15,7 +15,7 @@ FILTERS = {
 	"cost":       "/html/body/div[2]/div/div[2]/section[2]/article/section[2]/div/section/section[4]"
 }
 
-def getElement(xpath, parent = "default", max_tries = 5):
+def getElement(xpath, parent = "default", max_tries = 20):
 	done = False
 
 	while not done:
@@ -23,6 +23,7 @@ def getElement(xpath, parent = "default", max_tries = 5):
 			driver.switch_to.default_content()
 			if parent != "default":
 				driver.switch_to.frame(driver.find_element(By.XPATH, parent))
+				time.sleep(1)
 			done = True
 		except Exception as e:
 			time.sleep(1)
@@ -45,7 +46,7 @@ def getElement(xpath, parent = "default", max_tries = 5):
 def launchBrowser(location):
 	chrome_options = webdriver.ChromeOptions()
 	chrome_options.add_argument("start-maximized")
-	chrome_options.add_argument("load-extension=./learn_extensions")
+	chrome_options.add_argument("load-extension=./Extension")
 	driver = webdriver.Chrome(service = Service(ChromeDriverManager().install()), options = chrome_options)
 
 	driver.get(f"https://www.zomato.com/{location}")
@@ -53,7 +54,7 @@ def launchBrowser(location):
 
 def login(driver):
 	try:
-		getElement("/html/body/div[1]/div/div[2]/header/nav/ul[2]/li[4]").click()
+		getElement("/html/body/div[1]/div/div[2]/header/nav/ul[2]/li[2]").click()
 		getElement("/html/body/div[2]/div/div[2]/section[2]/section/div[3]", parent = "/html/body/div[6]/iframe").click()
 		getElement("/html/body/div[2]/div/div[2]/section[2]/section/section/section/input", parent = "/html/body/div[6]/iframe").send_keys(EMAIL_ID)
 		getElement("/html/body/div[2]/div/div[2]/section[2]/section/button", parent = "/html/body/div[6]/iframe").click()
@@ -67,18 +68,32 @@ def login(driver):
 	except:
 		print("Unable to login, please try again!")
 
-driver = launchBrowser("pune")
-# login(driver)
-
 def sortby(filter):
 	driver.find_element(By.XPATH, "/html/body/div[1]/div/div[5]/div/div/div[1]").click()
 	getElement(FILTERS[filter]).click()
 	driver.find_element(By.XPATH, "/html/body/div[2]/div/div[2]/section[2]/section/div/button[2]").click()
 
+def getDetails(categoryType, element):
+	data = {}
+
+	if categoryType == "best_food"
+		data["title"] = element.find_element(By.XPATH, ".//div/a[2]/div[1]/h4").text
+		data["rating"] = element.find_element(By.XPATH, ".//div/a[2]/div[1]/div/div/div/div/div/div[1]").text
+		data["price"] = element.find_element(By.XPATH, ".//div/a[2]/div[2]/p[2]").text
+
+	return data
+
+driver = launchBrowser("pune")
+# login(driver)
+
 while True:
-	inp = input(">>> ")
-	if inp == "i":
-		print(driver.find_elements(By.CLASS_NAME, "active-selected")[0].text)
-	elif inp == "s":
-		filter = input("sortby: ")
-		sortby(filter)
+	try:
+		inp = input(">>> ")
+		if inp == "i":
+			print(getDetails("best_food", driver.find_elements(By.CLASS_NAME, "active-selected")[0]))
+		elif inp == "s":
+			filter = input("sortby: ")
+			sortby(filter)
+	except Exception as e:
+		print(e)
+		pass 
