@@ -56,7 +56,7 @@ class Speech_to_Text():
             text_output = self.text_to_Speech(self.input_sequence)
             break
 
-input_seq = "Hello This is Pratyush"
+input_seq = "Hello This is Pratyush Raj. We are working on a project for hackfest of IIT ISM DHANBAD .  This is a google chrome tool that works on helping blind people able to shop through real time voice integration "
 ob = Speech_to_Text(input_sequence=input_seq) 
 ob.main()
     
