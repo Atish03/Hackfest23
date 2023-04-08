@@ -28,8 +28,6 @@ To use the speech-to-text library, you will need to have the following installed
 ```
 $ pip install pyttsx3
 ```
-* Install the Google Cloud SDK by following the instructions provided in the Google Cloud SDK documentation.
-* Once the Google Cloud SDK is installed, set up a Google Cloud project and enable the Cloud Speech-to-Text API by following the instructions provided in the Google Cloud Speech-to-Text API documentation.
 
 ## Usage
 * To use the speech-to-text library, you will need to import the library and authenticate with the Google Cloud project that you set up earlier.
